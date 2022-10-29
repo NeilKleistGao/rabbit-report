@@ -17,6 +17,12 @@
             <h2 class="card-title">
               输入你的GitHub用户名
             </h2>
+
+            <div class="row">
+              <input type="text" class="form-control col-10" placeholder="GitHub用户名" id="usernameInput">
+              <div class="col-1"></div>
+              <button class="btn btn-primary col-1" type="button" id="generateButton">生成周报</button>
+            </div>
           </div>
 
           <div class="card" id="result">
@@ -35,6 +41,12 @@
       window.onload = function() {
         halfmoon.toggleDarkMode();
         init();
+        document.getElementById("generateButton").onclick = function() {
+          let username = document.getElementById("usernameInput").value;
+          if (username !== null && username !== undefined && username !== "") {
+            window.location.replace(window.location.href + "?username=" + username);
+          }
+        };
       }
     </script>
   </body>
