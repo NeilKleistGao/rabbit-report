@@ -1,1 +1,1 @@
-require('simple-server')(".", 3154)
+require('simple-server')(".", 3154);

@@ -1,13 +1,17 @@
 import { getURLVariable } from "./utils.js";
+import { getContributionData } from "./spider.js";
 
 export function init() {
-  let usernameVariable = getURLVariable("username")
+  let usernameVariable = getURLVariable("username");
 
   if (usernameVariable.success) {
-    document.getElementById("requireUsername").style.display = "none"
-    document.getElementById("resultTitle").textContent = usernameVariable.value + "的周报"
+    let data = getContributionData(usernameVariable.value);
+    // TODO: add analyzing
+
+    document.getElementById("requireUsername").style.display = "none";
+    document.getElementById("resultTitle").textContent = usernameVariable.value + "的周报";
   }
   else {
-    document.getElementById("result").style.display = "none"
+    document.getElementById("result").style.display = "none";
   }
 }
