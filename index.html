@@ -12,15 +12,29 @@
               Rabbit Report：生成你的GitHub周报
             </h1>
           </div>
+
+          <div class="card" id="requireUsername">
+            <h2 class="card-title">
+              输入你的GitHub用户名
+            </h2>
+          </div>
+
+          <div class="card" id="result">
+            <h2 class="card-title" id="resultTitle">
+              ***的周报
+            </h2>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="spider.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
-    <script type="text/javascript">
+    <script type="module">
+      import {init} from "./js/report.js"
+
       window.onload = function() {
         halfmoon.toggleDarkMode();
+        init();
       }
     </script>
   </body>
