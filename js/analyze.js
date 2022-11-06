@@ -1,6 +1,4 @@
-export function getAllContribution(data) {
-
-}
+let languageMap = {};
 
 function getMax(map) {
   let maxKey = "";
@@ -27,7 +25,6 @@ export function getLabels(data) {
     weekend: 0,
     weekday: 0
   };
-  let languageMap = {};
   let repoMap = {};
   let topicsMap = {};
   let openCount = 0;
@@ -42,11 +39,13 @@ export function getLabels(data) {
       typesMap[dd.type]++;
     }
 
-    if (languageMap[dd.repo.results.language] === undefined) {
-      languageMap[dd.repo.results.language] = 1;
-    }
-    else {
-      languageMap[dd.repo.results.language]++;
+    if (dd.repo.results.language !== undefined && dd.repo.results.language !== null && dd.repo.results.language !== "null") {
+      if (languageMap[dd.repo.results.language] === undefined) {
+        languageMap[dd.repo.results.language] = 1;
+      }
+      else {
+        languageMap[dd.repo.results.language]++;
+      }
     }
 
     if (repoMap[dd.repo.results.name] === undefined) {
@@ -154,12 +153,19 @@ export function getLabels(data) {
     res.push(maxTopics);
   }
 
-  res.push(getMax(languageMap));
+  const maxLanguage = getMax(languageMap);
+  if (maxLanguage === undefined) {
+    res.push("不专业");
+  }
+  else {
+    res.push(maxLanguage);
+  }
+  
   res.push(getMax(repoMap));
 
   return res;
 }
 
-export function getExtremeData(data) {
-    
+export function getLanguages() {
+  return languageMap;
 }

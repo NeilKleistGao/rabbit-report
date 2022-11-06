@@ -16,21 +16,3 @@ export function getURLVariable(name) {
     success: false
   };
 }
-
-export function getTimeRange() {
-  const now = new Date();
-  const begin = new Date(new Date().setDate(now.getDate() - ((now.getDay() + 6) % 7) - 7));
-  const end = new Date(new Date().setDate(now.getDate() - ((now.getDay() + 6) % 7)));
-  return {
-    begin: formatDate(begin),
-    isInRange: function(d) {
-      return d >= begin && d < end;
-    }
-  };
-}
-
-function formatDate(date) {
-  return date.getFullYear().toString() + "-" +
-         (date.getMonth() + 1).toString() + "-" +
-         date.getDate().toString();
-}

@@ -1,6 +1,6 @@
 import { getURLVariable } from "./utils.js";
 import { getContributionData } from "./spider.js";
-import { getLabels } from "./analyze.js";
+import { getLabels, getLanguages } from "./analyze.js";
 
 export function init() {
   let usernameVariable = getURLVariable("username");
@@ -24,6 +24,17 @@ export function init() {
       }
       document.getElementById("keywords").innerHTML = badges;
 
+      // sum contributions
+      document.getElementById("sum").textContent = "本周总贡献数：" + data.results.length;
+
+      // languages
+      const languageMap = getLanguages();
+      let languageBadges = "";
+      for (const lang in languageMap) {
+        languageBadges += createBadge(lang + ": " + languageMap[lang]);
+      }
+
+      document.getElementById("languages").innerHTML = languageBadges;
     }
 
     document.getElementById("requireUsername").style.display = "none";
