@@ -39,26 +39,18 @@ function parseContribution(json) {
         isOrg: isOrg
       };
 
-      if (type === "PushEvent") {
-        e.type = type;
-        e.message = act.payload.commits.message;
-      }
-      else if (type === "CreateEvent" || type === "ForkEvent") {
+      if (type === "PushEvent" || type === "CreateEvent" || type === "ForkEvent") {
         e.type = type;
       }
       else if (type === "IssuesEvent") {
         e.type = type;
-        e.message = act.payload.issue.title;
-        e.draft = act.payload.issue.draft;
-        e.milestone = act.payload.issue.milestone;
-        e.labels = act.payload.issue.labels;
+        e.state = act.payload.issue.state;
+        e.comments = act.payload.issue.comments;
       }
       else if (type === "PullRequestEvent") {
         e.type = type;
-        e.message = act.payload.pull_request.title;
-        e.draft = act.payload.pull_request.draft;
-        e.milestone = act.payload.pull_request.milestone;
-        e.labels = act.payload.pull_request.labels;
+        e.state = act.payload.pull_request.state;
+        e.comments = act.payload.pull_request.base.comments;
       }
 
       if (e.type !== undefined) {
@@ -73,9 +65,9 @@ function parseContribution(json) {
 function getRepo(url) {
   return sendGet(url, function(json) {
     return {
-      private: json.private,
       language: json.language,
-      topics: json.topics
+      topics: json.topics,
+      name: json.name
     };
   });
 }
