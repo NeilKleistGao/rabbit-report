@@ -29,6 +29,7 @@
             <h2 class="card-title" id="resultTitle">
               ***的周报
             </h2>
+            <div id="enough"></div>
           </div>
         </div>
       </div>
@@ -40,13 +41,13 @@
 
       window.onload = function() {
         halfmoon.toggleDarkMode();
-        init();
         document.getElementById("generateButton").onclick = function() {
           let username = document.getElementById("usernameInput").value;
           if (username !== null && username !== undefined && username !== "") {
             window.location.replace(window.location.href + "?username=" + username);
           }
         };
+        init();
       }
     </script>
   </body>

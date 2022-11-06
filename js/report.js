@@ -6,6 +6,9 @@ export function init() {
 
   if (usernameVariable.success) {
     let data = getContributionData(usernameVariable.value);
+    if (data.length < 5) {
+      document.getElementById("enough").textContent = "本周贡献不足5条，无法生成周报";
+    }
     // TODO: add analyzing
 
     document.getElementById("requireUsername").style.display = "none";

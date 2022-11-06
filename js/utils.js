@@ -20,10 +20,12 @@ export function getURLVariable(name) {
 export function getTimeRange() {
   const now = new Date();
   const begin = new Date(new Date().setDate(now.getDate() - ((now.getDay() + 6) % 7) - 7));
-  const end = new Date(new Date().setDate(begin.getDate() + 6));
+  const end = new Date(new Date().setDate(now.getDate() - ((now.getDay() + 6) % 7)));
   return {
     begin: formatDate(begin),
-    end: formatDate(end)
+    isInRange: function(d) {
+      return d >= begin && d < end;
+    }
   };
 }
 
