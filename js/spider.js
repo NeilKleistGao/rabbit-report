@@ -28,11 +28,54 @@ function parseContribution(json) {
   let res = [];
 
   for (const act of json) {
+    const type = act.type;
     const date = new Date(act.created_at);
+    const repo = getRepo(act.repo.url);
+    const isOrg = act.org !== undefined;
     if (range.isInRange(date)) {
-      res.push(act);
+      let e = {
+        date: date,
+        repo: repo,
+        isOrg: isOrg
+      };
+
+      if (type === "PushEvent") {
+        e.type = type;
+        e.message = act.payload.commits.message;
+      }
+      else if (type === "CreateEvent" || type === "ForkEvent") {
+        e.type = type;
+      }
+      else if (type === "IssuesEvent") {
+        e.type = type;
+        e.message = act.payload.issue.title;
+        e.draft = act.payload.issue.draft;
+        e.milestone = act.payload.issue.milestone;
+        e.labels = act.payload.issue.labels;
+      }
+      else if (type === "PullRequestEvent") {
+        e.type = type;
+        e.message = act.payload.pull_request.title;
+        e.draft = act.payload.pull_request.draft;
+        e.milestone = act.payload.pull_request.milestone;
+        e.labels = act.payload.pull_request.labels;
+      }
+
+      if (e.type !== undefined) {
+        res.push(e);
+      }
     }
   }
 
   return res;
+}
+
+function getRepo(url) {
+  return sendGet(url, function(json) {
+    return {
+      private: json.private,
+      language: json.language,
+      topics: json.topics
+    };
+  });
 }
